@@ -1,0 +1,16 @@
+# Example Manifest, to verify path based health checks
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-path
+spec:
+  containers:
+  - name: liveness
+    image: manojbadam/liveness
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+      periodSeconds: 5

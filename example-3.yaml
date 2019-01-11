@@ -1,0 +1,24 @@
+# Example Manifest, to verify path health check timeouts
+# This manifest will endup continous restarts
+# since the delaySeconds > timeoutSeconds
+# This manifest also features failureThreshold, which can be used for maxFailures before pod gets killed
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-path-timeout
+spec:
+  containers:
+  - name: liveness
+    image: manojbadam/liveness
+    env:
+      - name: "DELAY_SECONDS"
+        value: "6"
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 1
