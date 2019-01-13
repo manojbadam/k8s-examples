@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hw
+  namespace: hw
+  labels:
+    istio-injection: enabled
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hw-ingress
+  namespace: hw
+  annotations:
+    contour.heptio.com/request-timeout: 20s
+    kubernetes.io/ingress.class: contour-public
+spec:
+  rules:
+  - host: helloworld.service
+    http:
+      paths:
+      - backend:
+          serviceName: hw-service
+          servicePort: 3000
+        path: /
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: hw
+  name: hw-service
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: hw
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: hw
+  name: hw-deployment
+  labels:
+    app: hw
+spec:
+  selector:
+    matchLabels:
+      app: hw
+  replicas: 1
+  template:
+    metadata:
+      namespace: hw
+      labels:
+        app: hw
+    spec:
+      containers:
+      - name: hellohttp
+        image: phylake/hellohttp
+        resources:
+          requests:
+            cpu: 100m
+            memory: 16Mi
+        ports:
+        - containerPort: 3000

@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny
+  namespace: hw
+spec:
+  podSelector: 
+    matchLabels:
+      app: hw
+  policyTypes:
+  - Ingress
+  - Egress
