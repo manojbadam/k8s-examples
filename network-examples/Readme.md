@@ -1,5 +1,5 @@
 ## Network Policy Tests
-In Kubernetes by default there is no network plugin is available[[1]](https://kubernetes.io/docs/concepts/services-networking/network-policies/#prerequisites), We need to have one of the network plugin (like calico, cilium, weave-net, flannel etc.. ) needed in the cluster. 
+In Kubernetes by default there is no network plugin is available[[1]](https://kubernetes.io/docs/concepts/services-networking/network-policies/#prerequisites), We need to have one of the network plugin (like calico, cilium, weave-net, flannel etc.. ) needed in the cluster.
 
 A network policy is a specification of how groups of pods are allowed to communicate with each other and other network endpoints.
 
@@ -17,8 +17,9 @@ Endpoints:
 Later in the section we are going to run another service (service2) nginx, so we can test the pod to pod connectivity.
 
 ## Pre-Requisites
-1. Setup EKS cluster using `adobe-platform/k8s-infrastructure` with command `make eks`
-2. Get the Public ELB endpoint from AWS console (Ex - thrash98-sbx-or2-k8s-pub-lb-0-672520883.us-west-2.elb.amazonaws.com)
+1. Setup EKS cluster. Refer [docs](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
+2. Setup Ingress controller and get the public ELB endpoint. Refer [docs](https://github.com/kubernetes/ingress-nginx) (for following example, we can use thrash98-sbx-or2-k8s-pub-lb-0-672520883.us-west-2.elb.amazonaws.com)
+3. Setup Cilium. Refer [docs](https://cilium.readthedocs.io/en/stable/kubernetes/install/eks/)
 3. Deploy the sample app (service1)
 ```
 kubectl apply -f sample-app.yaml
