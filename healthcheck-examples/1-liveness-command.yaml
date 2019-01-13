@@ -1,0 +1,18 @@
+# Example Manifest, to verify command based health checks
+# Also included PeriodSeconds, how frequently we want to do healthchecks
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-exec
+spec:
+  containers:
+  - name: liveness
+    image: manojbadam/liveness
+    livenessProbe:
+      exec:
+        command:
+        - curl
+        - http://localhost:8080/
+      periodSeconds: 5
